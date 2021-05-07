@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store</title>
-</head>
-<body>
-    <h1>Store</h1>
+{% extends 'base.html' %} 
+
+{% block content %}    
+    <p>Welcome! {% now "jS F Y H:i" %}</p>
     <p>
         {{ cardinality_text }}
     </p>
     <p>
-    {% if count == 1 %}
-        There 
-        is 
-        1 book in the 
-        store. 
-    {% else %}
-        There are 
-        {{ count }} books in the 
-        store.
-    {% endif %}
+        There {{ count|pluralize:"is,are" }} {{ count }} book{{ count|pluralize }} in the store.
     </p>
-</body>
-</html>
+    <ul>
+        {% for book in books %}
+        <li>
+            <strong>{{ book.title }}</strong> 
+            by <em>{{ book.author }}</em>:
+            {{ book.description }}. {{ book.publish_date }}
+        </li>
+        {% endfor %}        
+    </ul>
+
+    
+    <footer>
+        {% autoescape off %}
+            {{ footer_content }}
+        {% endautoescape %}
+    </footer>
+{% endblock %}

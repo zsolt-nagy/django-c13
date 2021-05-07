@@ -1,13 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Home</h1>
-    <a href="http://127.0.0.1:8000/store/">Store</a>
-</body>
-</html>
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %} 
+
+    {% if request.user.is_authenticated %}
+        <p>
+            Welcome, {{ request.user.username}}! 
+            (<a href="{% url 'admin:logout' %}">Logout</a>)
+        </p>
+        <p>{{ request.session.location }}</p>
+    {% else %}
+        <p>Welcome to the Mystery Books homepage.</p>
+    {% endif %}
+    <img src="{% static 'base/img/header_mobile.jpg' %}" alt="Bookstore header image displaying a library.">
+    
+{% endblock %}
