@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Book
 import datetime
+import requests
 
 # Create your views here.
 def index(request):
@@ -44,9 +45,11 @@ def new_book(request):
             context['show_form'] = True
         return render(request, 'store/new_book.html', context)
     else: # elif request.method == "GET":
+        data = requests.get('https://jsonplaceholder.typicode.com/todos/1')
         context = {
             'page_heading': 'Create a Book',
             'page_name': 'new_book', 
-            'show_form': True
+            'show_form': True, 
+            'todo': data.json()
         }
         return render(request, 'store/new_book.html', context)
